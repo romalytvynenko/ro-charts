@@ -42,9 +42,12 @@ export default {
 
   computed: {
     stacks () {
-      const data = this.stackData
+      const layers = stack()
+        .keys(Object.keys(this.labels))
+        (this.data.reverse())
 
-      const layers = stack()(data)
+      console.warn(layers)
+
       const {x, y} = this.getScales()
 
       return layers.map((layer, i) => {
@@ -52,9 +55,9 @@ export default {
           return {
             i: d.i,
             'clip-path': `url(#stacked-bar-clip-${this.id}-${j})`,
-            x: x(d.x),
-            y: y(d.y + d.y0),
-            height: y(d.y0) - y(d.y + d.y0),
+            x: x(j),
+            y: y(d[1]),
+            height: y(d[0]) - y(d[1]),
             width: x.bandwidth(),
             fill: this.getColor(i)
           }

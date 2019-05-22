@@ -43,22 +43,23 @@ export default {
 
   computed: {
     layers () {
-      const data = this.stackData
+      const layers = stack()
+        .keys(Object.keys(this.labels))
+        (this.data.reverse())
 
-      const layers = stack()(data.reverse())
       const {x, y} = this.getScales()
 
       const area = this.interpolateFunction(
         svgArea()
-          .x(d => x(d.x) + (x.bandwidth ? x.bandwidth() / 2 : 0))
-          .y0(d => y(d.y0))
-          .y1(d => y(d.y0 + d.y))
+          .x((d, i) => x(i) + (x.bandwidth ? x.bandwidth() / 2 : 0))
+          .y0(d => y(d[0]))
+          .y1(d => y(d[1]))
       )
 
       const line = this.interpolateFunction(
         svgLine()
-          .x(d => x(d.x) + (x.bandwidth ? x.bandwidth() / 2 : 0))
-          .y(d => y(d.y))
+          .x((d, i) => x(i) + (x.bandwidth ? x.bandwidth() / 2 : 0))
+          .y(d => y(d[1]))
       )
 
       return layers.map((layer, i) => {

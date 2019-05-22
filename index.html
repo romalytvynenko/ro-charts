@@ -22,16 +22,25 @@
       return {
         chart: {
           datasets: {
-            growth: {
-              type: 'bar',
-              data: [1, 3, 2, 1],
-              on: 'y2',
-            },
+            // growth: {
+            //   type: 'bar',
+            //   data: [1, 3, 2, 1],
+            //   on: 'y2',
+            // },
             audience: {
-              type: 'line-chart',
-              data: [1, 12, 45, 67],
-              dashedValues: [true, true, false, false],
-              color: 'red',
+              type: 'stacked-bar',
+              radius: 10,
+              data: [{value: 1, test: 9}, {value: 12, test: 15}, {value: 13, test: 5}, {value: 67, test: 5}],
+              labels: {
+                value: {
+                  title: 'Audience',
+                  color: 'green',
+                },
+                test: {
+                  title: 'Wow',
+                  color: 'blue',
+                },
+              },
             }
           },
           axis: {
@@ -43,9 +52,9 @@
             y: {
               label: 'Audience'
             },
-            y2: {
-              label: 'Audience Growth',
-            }
+            // y2: {
+            //   label: 'Audience Growth',
+            // }
           }
         }
       }
