@@ -2,12 +2,14 @@ import {
   line as svgLine,
   area as svgArea,
   stack
-} from 'd3'
+} from 'd3-shape'
 import CoordinateGraph from '../mixins/CoordinateGraph'
+import Interpolates from '../mixins/Interpolates'
 
 export default {
   mixins: [
-    CoordinateGraph
+    CoordinateGraph,
+    Interpolates,
   ],
   props: {
     data: {
@@ -34,10 +36,6 @@ export default {
       type: String,
       default: 'area'
     },
-    interpolate: {
-      type: String,
-      default: 'cardinal'
-    },
     labels: {
       type: Object,
     },
@@ -50,16 +48,18 @@ export default {
       const layers = stack()(data.reverse())
       const {x, y} = this.getScales()
 
-      const area = svgArea()
-        .x(d => x(d.x) + (x.rangeBand ? x.rangeBand() / 2 : 0))
-        .y0(d => y(d.y0))
-        .y1(d => y(d.y0 + d.y))
-        .interpolate(this.interpolate)
+      const area = this.interpolateFunction(
+        svgArea()
+          .x(d => x(d.x) + (x.bandwidth ? x.bandwidth() / 2 : 0))
+          .y0(d => y(d.y0))
+          .y1(d => y(d.y0 + d.y))
+      )
 
-      const line = svgLine()
-        .x((d, i) => x(d.x) + (x.rangeBand ? x.rangeBand() / 2 : 0))
-        .y(d => y(d.y))
-        .interpolate(this.interpolate)
+      const line = this.interpolateFunction(
+        svgLine()
+          .x(d => x(d.x) + (x.bandwidth ? x.bandwidth() / 2 : 0))
+          .y(d => y(d.y))
+      )
 
       return layers.map((layer, i) => {
         return {

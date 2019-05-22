@@ -4,6 +4,8 @@
   "description": "Small Vue charting library powered by D3",
   "main": "index.js",
   "scripts": {
+    "dev": "./node_modules/.bin/rollup --config=rollup.config.js -w",
+    "build": "./node_modules/.bin/rollup --config=rollup.config.js --environment PRODUCTION:true && ./node_modules/.bin/rollup --config=rollup.config.js --environment FORMAT:esm",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +25,14 @@
   "homepage": "https://github.com/romalytvynenko/ro-charts#readme",
   "dependencies": {
     "d3": "^5.9.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "rollup": "^1.12.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-uglify": "^6.0.2"
   }
 }

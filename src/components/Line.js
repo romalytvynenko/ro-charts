@@ -1,12 +1,14 @@
 import {
   line
-} from 'd3'
+} from 'd3-shape'
 import CoordinateGraph from '../mixins/CoordinateGraph'
 import { getDashArray } from '../utils'
+import Interpolates from '../mixins/Interpolates'
 
 export default {
   mixins: [
-    CoordinateGraph
+    CoordinateGraph,
+    Interpolates,
   ],
   data () {
     return {
@@ -34,24 +36,19 @@ export default {
       type: String,
       default: 'line'
     },
-    interpolate: {
-      type: String,
-      default: 'cardinal'
-    }
   },
 
   computed: {
     line () {
       const {x, y} = this.getScales()
 
-      const chartLine = line()
+      const chartLine = this.interpolateFunction(line()
         .x(function (d, i) {
-          return x(i) + (x.rangeBand ? x.rangeBand() / 2 : 0)
+          return x(i) + (x.bandwidth ? x.bandwidth() / 2 : 0)
         })
         .y(function (d) {
           return y(d)
-        })
-        .interpolate(this.interpolate)
+        }))
 
       this.$nextTick(() => {
         this.prepareDashArray(x)
@@ -68,7 +65,7 @@ export default {
 
       return this.data.map((datum, i) => {
         return {
-          x: x(i) + (x.rangeBand ? x.rangeBand() / 2 : 0),
+          x: x(i) + (x.bandwidth ? x.bandwidth() / 2 : 0),
           y: y(datum),
         }
       })

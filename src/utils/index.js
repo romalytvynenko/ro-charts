@@ -1,3 +1,11 @@
+const _ = {
+  last: (arr) => arr[arr.length - 1],
+  range: (count) => {
+    return [...Array(count).keys()]
+  }
+}
+
+
 const DASH_LENGTH = 5
 const DASH_SEPARATOR_LENGTH = 3
 
@@ -15,7 +23,7 @@ function getDashedRanges(data, isDashed) {
   const hasOpenRange = (arr) => _.last(arr) && !('end' in _.last(arr))
   const lastIndex = data.length - 1
 
-  return _.reduce(data, (res, d, i) => {
+  return data.reduce((res, d, i) => {
     const isRangeStart = !hasOpenRange(res) && isDashed(d, i)
     if (isRangeStart) res.push({ start: Math.max(0, i - 1) })
 
@@ -59,7 +67,7 @@ function getPathLengthAtX(path, x) {
 function buildDashArray(dashedRanges, lengths) {
   let lastVisitedIndex = 0
 
-  let dashes = _.reduce(dashedRanges, (res, { start, end }, i) => {
+  let dashes = dashedRanges.reduce((res, { start, end }, i) => {
     const prevEnd = i === 0 ? 0 : dashedRanges[i - 1].end
 
     const normalSegment = lengths[start] - lengths[prevEnd]

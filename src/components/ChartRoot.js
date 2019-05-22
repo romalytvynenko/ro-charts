@@ -1,11 +1,13 @@
 import {
   scaleBand,
-  scaleLinear,
+  scaleLinear
+} from 'd3-scale'
+
+import {
   extent,
   min,
-  min,
   sum
-} from 'd3'
+} from 'd3-array'
 
 export default {
   data () {
@@ -120,9 +122,14 @@ export default {
      * Add some space if needed.
      */
     prepareMargins () {
-      // let hasYLabel = (yAxis && yAxis.label) || (y2Axis && y2Axis.label)
-      if (true) {
-        this.margins[0] += 33
+      const y = this.data.axis ? this.data.axis.y : null
+      const y2 = this.data.axis ? this.data.axis.y2 : null
+      if (!y && !y2) {
+        return
+      }
+      const hasYLabel = !!y.label || !!y2.label
+      if (hasYLabel) {
+        this.margins[0] += 50
       }
     },
 
@@ -141,7 +148,7 @@ export default {
 
           res = res.concat(data || [])
 
-          const absolute = !!chart.absolute
+          const absolute = !chart.hasOwnProperty('absolute') || !!chart.absolute
           if (absolute) {
             if (min(data) > 0) {
               res.push(0)
@@ -161,7 +168,7 @@ export default {
     const axis = Object.keys(this.data.axis)
       .reduce((res, id) => {
         const axis = this.data.axis[id]
-        res[id] = h(`${id}-axis-exp`, {
+        res[id] = h(`${id}-axis`, {
           props: axis
         })
         return res
@@ -169,7 +176,7 @@ export default {
 
     const charts = Object.keys(this.data.datasets).reduce((res, id) => {
       const chart = this.data.datasets[id]
-      res[id] = h(`${chart.type}-exp`, {
+      res[id] = h(`${chart.type}`, {
         props: chart
       })
       return res
@@ -196,12 +203,6 @@ export default {
 
     return h('div', {
       class: 'vue-chart',
-      directives: [
-        {
-          name: 'click-outside',
-          value: this.cancelSelection,
-        }
-      ]
     }, [
       h('svg', {
         attrs: {

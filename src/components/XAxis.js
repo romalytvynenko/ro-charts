@@ -32,7 +32,7 @@ export default {
     ticksObjects () {
       const { x } = this.$parent.scales
 
-      const delta = this.$parent.isLinear() ? 0 : x.rangeBand() / 2
+      const delta = this.$parent.isLinear() ? 0 : x.bandwidth() / 2
 
       return this.labels
         .map((label, i) => {
@@ -91,8 +91,7 @@ export default {
         return this.label[d]
       }
       d = this.labels[d]
-      let date = moment(d)
-      return date.format(this.format)
+      return (new Date(d)).toLocaleString()
     },
 
     tickLine () {

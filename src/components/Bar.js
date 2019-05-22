@@ -45,7 +45,7 @@ export default {
           className: this.getClassName(datum, i),
           x: x(i),
           y: y(Math.max(0, datum)),
-          width: x.rangeBand(),
+          width: x.bandwidth(),
           height: this.getHeight(datum, y),
           fill: this.getColor(i)
         }

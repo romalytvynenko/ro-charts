@@ -1,7 +1,9 @@
 import {
-  stack,
+  stack
+} from 'd3-shape'
+import {
   sum
-} from 'd3'
+} from 'd3-array'
 import CoordinateGraph from '../mixins/CoordinateGraph'
 
 export default {
@@ -53,7 +55,7 @@ export default {
             x: x(d.x),
             y: y(d.y + d.y0),
             height: y(d.y0) - y(d.y + d.y0),
-            width: x.rangeBand(),
+            width: x.bandwidth(),
             fill: this.getColor(i)
           }
         })
@@ -81,7 +83,7 @@ export default {
           ry: this.radius,
           x: x(i),
           y: d === 0 ? y(0) : y(Math.max(0, d)),
-          width: x.rangeBand(),
+          width: x.bandwidth(),
           height,
         }
       })

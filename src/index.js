@@ -10,14 +10,14 @@ import Y2Axis from './components/Y2Axis.js'
 let RoCharts = {}
 
 RoCharts.install = (Vue, options) => {
-  Vue.component('chart-exp', ChartRoot)
-  Vue.component('line-exp', Line)
-  Vue.component('bar-exp', Bar)
-  Vue.component('stacked-area-exp', StackedArea)
-  Vue.component('stacked-bar-exp', StackedBar)
-  Vue.component('x-axis-exp', XAxis)
-  Vue.component('y-axis-exp', YAxis)
-  Vue.component('y2-axis-exp', Y2Axis)
+  Vue.component('chart', ChartRoot)
+  Vue.component('line-chart', Line)
+  Vue.component('bar', Bar)
+  Vue.component('stacked-area', StackedArea)
+  Vue.component('stacked-bar', StackedBar)
+  Vue.component('x-axis', XAxis)
+  Vue.component('y-axis', YAxis)
+  Vue.component('y2-axis', Y2Axis)
 }
 
 export default RoCharts
