@@ -69,17 +69,6 @@ export default {
         }
       })
     },
-
-    stackData () {
-      return Object.keys(this.labels).map(key => {
-        return this.data.map((d, j) => {
-          return {
-            x: j,
-            y: d[key]
-          }
-        })
-      })
-    },
   },
 
   methods: {

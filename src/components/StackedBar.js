@@ -46,8 +46,6 @@ export default {
         .keys(Object.keys(this.labels))
         (this.data.reverse())
 
-      console.warn(layers)
-
       const {x, y} = this.getScales()
 
       return layers.map((layer, i) => {
@@ -89,18 +87,6 @@ export default {
           width: x.bandwidth(),
           height,
         }
-      })
-    },
-
-    stackData () {
-      return Object.keys(this.labels).map(key => {
-        return this.data.map((d, j) => {
-          return {
-            x: j,
-            y: d[key],
-            i: j,
-          }
-        })
       })
     },
 
