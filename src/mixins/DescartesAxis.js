@@ -26,6 +26,15 @@ export default {
       type: Number,
       default: 5
     },
+    format: {
+      type: String,
+    },
+    dateFormatter: {
+      type: Function,
+      default: function (d, format) {
+        return (new Date(d)).toLocaleString() + ` ${format}`
+      }
+    },
   },
   computed: {
     domainPath () {

@@ -22,10 +22,6 @@ export default {
       type: Boolean,
       default: false
     },
-    format: {
-      type: String,
-      default: 'MMMM'
-    },
   },
 
   computed: {
@@ -91,7 +87,7 @@ export default {
         return this.label[d]
       }
       d = this.labels[d]
-      return (new Date(d)).toLocaleString()
+      return this.dateFormatter(d, this.format)
     },
 
     tickLine () {

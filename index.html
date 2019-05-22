@@ -7,7 +7,9 @@
 <body>
 <h1>Yo</h1>
 <div id="app">
-    <chart :data="chart" :margins="[0,0,0,0]"></chart>
+    <div style="width: 800px">
+        <chart :data="chart" :date-formatter="dateFormatter"></chart>
+    </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
 <script src="./dist/ro-charts.umd.js"></script>
@@ -20,15 +22,16 @@
       return {
         chart: {
           datasets: {
-            audience: {
-              type: 'line-chart',
-              data: [1, 12, 45, 67],
-              dashedValues: [true, true, false, false],
-            },
             growth: {
               type: 'bar',
               data: [1, 3, 2, 1],
               on: 'y2',
+            },
+            audience: {
+              type: 'line-chart',
+              data: [1, 12, 45, 67],
+              dashedValues: [true, true, false, false],
+              color: 'red',
             }
           },
           axis: {
@@ -45,6 +48,11 @@
             }
           }
         }
+      }
+    },
+    methods: {
+      dateFormatter (d, format) {
+        return `${d}: ${format}`
       }
     }
   })

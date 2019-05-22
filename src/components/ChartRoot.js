@@ -42,6 +42,10 @@ export default {
       default: 16 / 7
     },
 
+    dateFormatter: {
+      type: Function,
+    },
+
     margins: {
       type: Array,
       default () {
@@ -167,7 +171,10 @@ export default {
   render (h) {
     const axis = Object.keys(this.data.axis)
       .reduce((res, id) => {
-        const axis = this.data.axis[id]
+        let axis = this.data.axis[id]
+        if (id === 'x' && this.dateFormatter) {
+          axis['dateFormatter'] = this.dateFormatter
+        }
         res[id] = h(`${id}-axis`, {
           props: axis
         })
